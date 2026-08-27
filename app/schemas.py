@@ -27,3 +27,7 @@ class UserResponse(BaseModel):
 class UserProjectMappingRequest(BaseModel):
     project_id: int
     user_id: int
+
+class CreateProjectRequest(BaseModel):
+    project_name: str
+    description: str

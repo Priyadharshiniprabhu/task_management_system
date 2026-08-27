@@ -6,7 +6,6 @@ from app.models import UserProject
 
 
 class AdminService:
-
     @staticmethod
     def map_user_to_project(
             request,
@@ -69,4 +68,39 @@ class AdminService:
         return {
             "message":
             "User mapped successfully"
+        }
+
+class AdminService:
+
+    @staticmethod
+    def create_project(request, db):
+
+        existing_project = (
+            db.query(Project)
+            .filter(
+                Project.project_name == request.project_name,
+                Project.is_active == True
+            )
+            .first()
+        )
+
+        if existing_project:
+            raise HTTPException(
+                status_code=400,
+                detail="Project already exists"
+            )
+
+        project = Project(
+            project_name=request.project_name,
+            description=request.description,
+            is_active=True
+        )
+
+        db.add(project)
+        db.commit()
+        db.refresh(project)
+
+        return {
+            "message": "Project created successfully",
+            "project_id": project.id
         }

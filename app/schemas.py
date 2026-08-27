@@ -13,4 +13,17 @@ class LoginRequest(BaseModel):
 class LoginResponse(BaseModel):
     access_token: str
     token_type: str
+    # role: str
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+    email: str
     role: str
+
+    class Config:
+        from_attributes = True
+
+class UserProjectMappingRequest(BaseModel):
+    project_id: int
+    user_id: int

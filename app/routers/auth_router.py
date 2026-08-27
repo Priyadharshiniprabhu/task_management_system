@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi import Depends
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 
 from sqlalchemy.orm import Session
 
@@ -59,9 +59,6 @@ def login(
 
     if not response:
 
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid credentials"
-        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 
     return response

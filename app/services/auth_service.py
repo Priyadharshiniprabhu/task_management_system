@@ -28,7 +28,7 @@ class AuthService:
             password=hash_password(
                 register_request.password
             ),
-            role=register_request.role.upper()
+            role="USER"
         )
 
         db.add(user)

@@ -265,3 +265,41 @@ class TaskService:
             )
 
         return response
+
+    @staticmethod
+    def verify_task(
+            task_id,
+            db
+    ):
+
+        task = (
+            db.query(Task)
+            .filter(
+                Task.id == task_id,
+                Task.is_active == True
+            )
+            .first()
+        )
+
+        if not task:
+            raise HTTPException(
+                status_code=404,
+                detail="Task not found"
+            )
+
+        if task.status != "COMPLETED_BY_USER":
+            raise HTTPException(
+                status_code=400,
+                detail="Only completed tasks can be verified"
+            )
+
+        task.status = "VERIFIED_COMPLETED"
+
+        db.commit()
+        db.refresh(task)
+
+        return {
+            "message": "Task verified successfully",
+            "task_id": task.id,
+            "status": task.status
+        }

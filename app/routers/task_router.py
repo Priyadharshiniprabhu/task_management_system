@@ -44,3 +44,15 @@ def get_tasks_for_review(
 ):
 
     return TaskService.get_tasks_for_review(db)
+
+@router.patch("/{task_id}/verify")
+def verify_task(
+        task_id: int,
+        db: Session = Depends(get_db),
+        current_user=Depends(admin_required)
+):
+
+    return TaskService.verify_task(
+        task_id,
+        db
+    )

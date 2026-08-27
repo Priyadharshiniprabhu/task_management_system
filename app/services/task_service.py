@@ -5,7 +5,6 @@ from app.models import Project
 from app.models import UserProject
 from app.models import Task
 
-
 class TaskService:
 
     @staticmethod
@@ -89,3 +88,180 @@ class TaskService:
             "message": "Task created successfully",
             "task_id": task.id
         }
+
+    @staticmethod
+    def get_all_tasks(db):
+
+        tasks = (
+            db.query(Task)
+            .filter(
+                Task.is_active == True,
+                Task.status != "VERIFIED_COMPLETED"
+            )
+            .all()
+        )
+
+        response = []
+
+        for task in tasks:
+ 
+            user = (
+                db.query(User)
+                .filter(
+                    User.id == task.user_id
+                )
+                .first()
+            )
+
+            response.append(
+                {
+                    "task_id": task.id,
+                    "task_name": task.task_name,
+                    "description": task.description,
+                    "priority": task.priority,
+                    "status": task.status,
+                    "assigned_user": user.username
+                }
+            )
+        return response
+
+    @staticmethod
+    def get_user_tasks(
+            current_user,
+            db
+    ):
+  
+        tasks = (
+            db.query(Task)
+            .filter(
+                Task.user_id == current_user.id,
+                Task.is_active == True,
+                Task.status != "VERIFIED_COMPLETED"
+            )
+            .all()
+        )
+
+        response = []
+
+        for task in tasks:
+  
+            response.append(
+                {
+                    "task_id": task.id,
+                    "task_name": task.task_name,
+                    "description": task.description,
+                    "priority": task.priority,
+                    "status": task.status
+                }
+            )
+
+        return response
+
+    @staticmethod
+    def update_task_status(
+            task_id,
+            request,
+            current_user,
+            db
+    ):
+
+        task = (
+            db.query(Task)
+            .filter(
+                Task.id == task_id,
+                Task.is_active == True
+            )
+            .first()
+        )
+
+        if not task:
+            raise HTTPException(
+                status_code=404,
+                detail="Task not found"
+            )
+
+        if task.user_id != current_user.id:
+            raise HTTPException(
+                status_code=403,
+                detail="You are not authorized to update this task"
+            )
+
+        valid_statuses = [
+            "IN_PROGRESS",
+            "COMPLETED_BY_USER"
+        ]
+
+        if request.status.upper() not in valid_statuses:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid status"
+            )
+
+        if (
+                task.status == "ASSIGNED"
+                and request.status.upper() == "COMPLETED_BY_USER"
+        ):
+            raise HTTPException(
+                status_code=400,
+                detail="Task must be moved to IN_PROGRESS first"
+            )
+
+        if (
+                task.status == "COMPLETED_BY_USER"
+        ):
+            raise HTTPException(
+                status_code=400,
+                detail="Task already submitted for review"
+            )
+
+        task.status = request.status.upper()
+
+        db.commit()
+        db.refresh(task)
+
+        return {
+            "message": "Task status updated successfully",
+            "task_id": task.id,
+            "status": task.status
+        }
+
+    @staticmethod
+    def get_tasks_for_review(db):
+
+        tasks = (
+            db.query(Task)
+            .filter(
+                Task.is_active == True,
+                Task.status == "COMPLETED_BY_USER"
+            )
+            .all()
+        )
+
+        response = []
+
+        for task in tasks:
+  
+            user = (
+                db.query(User)
+                .filter(User.id == task.user_id)
+                .first()
+            )
+
+            project = (
+                db.query(Project)
+                .filter(Project.id == task.project_id)
+                .first()
+            )
+
+            response.append(
+                {
+                    "task_id": task.id,
+                    "task_name": task.task_name,
+                    "priority": task.priority,
+                    "status": task.status,
+                    "assigned_user": user.username,
+                    "project_name": project.project_name
+                }
+            )
+
+        return response

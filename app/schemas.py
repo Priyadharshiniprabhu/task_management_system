@@ -38,3 +38,19 @@ class CreateTaskRequest(BaseModel):
     priority: str
     user_id: int
     project_id: int
+
+class TaskResponse(BaseModel):
+
+    id: int
+    task_name: str
+    description: str
+    priority: str
+    status: str
+    user_id: int
+    project_id: int
+
+    class Config:
+        from_attributes = True
+
+class UpdateTaskStatusRequest(BaseModel):
+    status: str

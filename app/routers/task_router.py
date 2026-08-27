@@ -7,7 +7,7 @@ from app.database import get_db
 from app.dependencies import admin_required
 from app.schemas import CreateTaskRequest
 from app.services.task_service import TaskService
-
+from app.auth import get_current_user
 
 router = APIRouter(
     prefix="/admin/tasks",
@@ -26,3 +26,21 @@ def create_task(
         request,
         db
     )
+
+@router.get("")
+def get_all_tasks(
+        db: Session = Depends(get_db),
+        current_user=Depends(admin_required)
+):
+
+    return TaskService.get_all_tasks(
+        db
+    )
+
+@router.get("/review")
+def get_tasks_for_review(
+        db: Session = Depends(get_db),
+        current_user=Depends(admin_required)
+):
+
+    return TaskService.get_tasks_for_review(db)

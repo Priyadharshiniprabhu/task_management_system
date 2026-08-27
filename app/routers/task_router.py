@@ -56,3 +56,15 @@ def verify_task(
         task_id,
         db
     )
+
+@router.delete("/{task_id}")
+def delete_task(
+        task_id: int,
+        db: Session = Depends(get_db),
+        current_user=Depends(admin_required)
+):
+
+    return TaskService.delete_task(
+        task_id,
+        db
+    )

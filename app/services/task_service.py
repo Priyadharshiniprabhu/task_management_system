@@ -303,3 +303,28 @@ class TaskService:
             "task_id": task.id,
             "status": task.status
         }
+
+    @staticmethod
+    def delete_task(task_id, db):
+
+        task = (
+            db.query(Task)
+            .filter(
+                Task.id == task_id,
+                Task.is_active == True
+            )
+            .first()
+        )
+
+        if not task:
+            raise HTTPException(
+                status_code=404,
+                detail="Task not found"
+            )
+
+        task.is_active = False
+        db.commit()
+
+        return {
+            "message": "Task deleted successfully"
+        }

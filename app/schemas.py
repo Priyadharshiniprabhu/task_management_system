@@ -31,3 +31,10 @@ class UserProjectMappingRequest(BaseModel):
 class CreateProjectRequest(BaseModel):
     project_name: str
     description: str
+
+class CreateTaskRequest(BaseModel):
+    task_name: str
+    description: str
+    priority: str
+    user_id: int
+    project_id: int

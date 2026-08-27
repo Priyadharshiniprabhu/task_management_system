@@ -12,26 +12,6 @@ from app.schemas import CreateProjectRequest
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
-class AdminService:
-    @staticmethod
-    def get_all_users_by_project(db):
-
-        projects = db.query(Project).all()
-        response = {}
-        for project in projects:
-            response[project.project_name] = {
-                "users": [
-                    {
-                        "id": user.id,
-                        "username": user.username,
-                        "email": user.email
-                    }
-                    for user in project.users
-                ]
-            }
-
-        return response
-
 @router.get("/users")
 def get_all_users(db: Session = Depends(get_db), current_user=Depends(admin_required)):
     return AdminService.get_all_users_by_project(db)

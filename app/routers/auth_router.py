@@ -5,6 +5,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.logger_config import logger
 
 from app.schemas import RegisterRequest
 from app.schemas import LoginRequest
@@ -39,6 +40,8 @@ def register(
         }
 
     except Exception as e:
+
+        logger.error(f"Error while creating admin user: {str(e)}")
 
         raise HTTPException(
             status_code=400,

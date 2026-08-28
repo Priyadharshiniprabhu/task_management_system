@@ -7,6 +7,8 @@ from app.database import SessionLocal
 from app.models import User
 from app.auth import hash_password
 
+from app.logger_config import logger
+
 
 def create_admin():
 
@@ -48,7 +50,8 @@ def create_admin():
 
     except Exception as e:
         db.rollback()
-        print(f"\nError: {e}")
+        logger.error(f"Admin creation failed!: {str(e)}")
+        raise
 
     finally:
         db.close()

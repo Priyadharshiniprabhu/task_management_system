@@ -5,6 +5,8 @@ from app.models import Project
 from app.models import UserProject
 from app.models import Task
 
+from app.logger_config import logger
+
 class TaskService:
 
     @staticmethod
@@ -83,6 +85,8 @@ class TaskService:
         db.add(task)
         db.commit()
         db.refresh(task)
+
+        logger.info(f"Task created: {task.task_name}")
 
         return {
             "message": "Task created successfully",
@@ -219,6 +223,8 @@ class TaskService:
         db.commit()
         db.refresh(task)
 
+        logger.info(f"Task {task.id} updated to {task.status}")
+
         return {
             "message": "Task status updated successfully",
             "task_id": task.id,
@@ -298,6 +304,8 @@ class TaskService:
         db.commit()
         db.refresh(task)
 
+        logger.info(f"Task verified successfully: {task.id}")
+
         return {
             "message": "Task verified successfully",
             "task_id": task.id,
@@ -324,6 +332,8 @@ class TaskService:
 
         task.is_active = False
         db.commit()
+
+        logger.info(f"Task deleted successfully: {task.id}")
 
         return {
             "message": "Task deleted successfully"

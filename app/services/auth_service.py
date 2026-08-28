@@ -5,6 +5,8 @@ from app.auth import hash_password
 from app.auth import verify_password
 from app.auth import create_access_token
 
+from app.logger_config import logger
+
 class AuthService:
 
     @staticmethod
@@ -35,6 +37,8 @@ class AuthService:
         db.commit()
         db.refresh(user)
 
+        logger.info(f"New user registered: {user.email}")
+
         return user
 
     @staticmethod
@@ -64,6 +68,8 @@ class AuthService:
                 "role": user.role
             }
         )
+
+        logger.info(f"User logged in: {user.email}")
 
         return {
             "access_token": token,

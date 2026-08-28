@@ -4,6 +4,7 @@ from app.models import User
 from app.models import Project
 from app.models import UserProject
 
+from app.logger_config import logger
 
 class AdminService:
     @staticmethod
@@ -84,6 +85,8 @@ class AdminService:
         db.commit()
         db.refresh(mapping)
 
+        logger.info(f"User {request.user_id} mapped to Project {request.project_id}")
+
         return {
             "message": "User mapped successfully",
             "user_id": request.user_id,
@@ -163,6 +166,8 @@ class AdminService:
             db.add(project)
             db.commit()
             db.refresh(project)
+
+            logger.info(f"Project created: {project.project_name}")
     
             return {
                 "message": "Project created successfully",

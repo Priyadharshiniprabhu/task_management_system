@@ -1,0 +1,113 @@
+2026-08-28 10:59:21,655 | ERROR | Error while creating admin user: Email already registered
+2026-08-28 11:03:28,748 | INFO | New user registered: priya@gmail.com
+2026-08-28 11:03:28,784 | INFO | User logged in: priya@gmail.com
+2026-08-28 11:35:28,506 | ERROR | Error while creating admin user: Email already registered
+2026-08-28 11:45:02,699 | INFO | New user registered: john@gmail.com
+2026-08-28 11:45:39,171 | INFO | User logged in: john@gmail.com
+2026-08-28 11:46:03,636 | ERROR | Error while creating admin user: Email already registered
+2026-08-28 11:47:08,340 | INFO | New user registered: priya@gmail.com
+2026-08-28 11:47:08,366 | INFO | User logged in: priya@gmail.com
+2026-08-28 11:47:08,380 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,397 | INFO | Project created: Banking Project
+2026-08-28 11:47:08,410 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,533 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:08,551 | INFO | Task 1 updated to IN_PROGRESS
+2026-08-28 11:47:08,564 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:08,576 | INFO | Task 1 updated to COMPLETED_BY_USER
+2026-08-28 11:47:08,586 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,607 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,617 | INFO | Task verified successfully: 1
+2026-08-28 11:47:08,628 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,640 | INFO | Task deleted successfully: 1
+2026-08-28 11:47:08,659 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:08,674 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,690 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,701 | INFO | Task created: Develop Login API
+2026-08-28 11:47:08,712 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:08,728 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:25,911 | INFO | New user registered: priya@gmail.com
+2026-08-28 11:47:25,932 | INFO | User logged in: priya@gmail.com
+2026-08-28 11:47:25,945 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:25,961 | INFO | Project created: Banking Project
+2026-08-28 11:47:25,971 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:25,985 | INFO | User 2 mapped to Project 1
+2026-08-28 11:47:25,996 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:26,014 | INFO | Task 1 updated to IN_PROGRESS
+2026-08-28 11:47:26,024 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:26,035 | INFO | Task 1 updated to COMPLETED_BY_USER
+2026-08-28 11:47:26,046 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:26,067 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:26,079 | INFO | Task verified successfully: 1
+2026-08-28 11:47:26,089 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:26,102 | INFO | Task deleted successfully: 1
+2026-08-28 11:47:26,120 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:26,136 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:26,152 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:26,165 | INFO | Task created: Develop Login API
+2026-08-28 11:47:26,176 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:26,193 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:59,508 | INFO | New user registered: priya@gmail.com
+2026-08-28 11:47:59,529 | INFO | User logged in: priya@gmail.com
+2026-08-28 11:47:59,542 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,558 | INFO | Project created: Banking Project
+2026-08-28 11:47:59,568 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,582 | INFO | User 2 mapped to Project 1
+2026-08-28 11:47:59,593 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:59,610 | INFO | Task 1 updated to IN_PROGRESS
+2026-08-28 11:47:59,619 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:59,630 | INFO | Task 1 updated to COMPLETED_BY_USER
+2026-08-28 11:47:59,641 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,660 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,671 | INFO | Task verified successfully: 1
+2026-08-28 11:47:59,684 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,695 | INFO | Task deleted successfully: 1
+2026-08-28 11:47:59,711 | INFO | User logged in: john@gmail.com
+2026-08-28 11:47:59,728 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,743 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,755 | INFO | Task created: Develop Login API
+2026-08-28 11:47:59,768 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:47:59,784 | INFO | User logged in: john@gmail.com
+2026-08-28 11:51:13,951 | ERROR | Error while creating admin user: Email already registered
+2026-08-28 11:53:01,133 | ERROR | Error while creating admin user: Email already registered
+2026-08-28 11:56:35,757 | INFO | New user registered: priya@gmail.com
+2026-08-28 11:56:35,781 | INFO | User logged in: priya@gmail.com
+2026-08-28 11:56:35,793 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:35,805 | INFO | Project created: Banking Project
+2026-08-28 11:56:35,815 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:35,825 | INFO | User 2 mapped to Project 1
+2026-08-28 11:56:35,836 | INFO | User logged in: john@gmail.com
+2026-08-28 11:56:35,850 | INFO | Task 1 updated to IN_PROGRESS
+2026-08-28 11:56:35,863 | INFO | User logged in: john@gmail.com
+2026-08-28 11:56:35,871 | INFO | Task 1 updated to COMPLETED_BY_USER
+2026-08-28 11:56:35,882 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:35,903 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:35,910 | INFO | Task verified successfully: 1
+2026-08-28 11:56:35,922 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:35,928 | INFO | Task deleted successfully: 1
+2026-08-28 11:56:35,948 | INFO | User logged in: john@gmail.com
+2026-08-28 11:56:35,965 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:35,984 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:35,994 | INFO | Task created: Develop Login API
+2026-08-28 11:56:36,005 | INFO | User logged in: admin@gmail.com
+2026-08-28 11:56:36,021 | INFO | User logged in: john@gmail.com
+2026-08-28 12:00:18,078 | INFO | New user registered: priya@gmail.com
+2026-08-28 12:00:18,102 | INFO | User logged in: priya@gmail.com
+2026-08-28 12:00:18,117 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,129 | INFO | Project created: Banking Project
+2026-08-28 12:00:18,140 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,149 | INFO | User 2 mapped to Project 1
+2026-08-28 12:00:18,160 | INFO | User logged in: john@gmail.com
+2026-08-28 12:00:18,173 | INFO | Task 1 updated to IN_PROGRESS
+2026-08-28 12:00:18,184 | INFO | User logged in: john@gmail.com
+2026-08-28 12:00:18,191 | INFO | Task 1 updated to COMPLETED_BY_USER
+2026-08-28 12:00:18,200 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,219 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,227 | INFO | Task verified successfully: 1
+2026-08-28 12:00:18,236 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,245 | INFO | Task deleted successfully: 1
+2026-08-28 12:00:18,264 | INFO | User logged in: john@gmail.com
+2026-08-28 12:00:18,279 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,296 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,303 | INFO | Task created: Develop Login API
+2026-08-28 12:00:18,314 | INFO | User logged in: admin@gmail.com
+2026-08-28 12:00:18,330 | INFO | User logged in: john@gmail.com

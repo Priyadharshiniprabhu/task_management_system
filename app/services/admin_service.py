@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 
 from app.models import User
 from app.models import Project
@@ -8,78 +8,49 @@ from app.logger_config import logger
 
 class AdminService:
     @staticmethod
-    def map_user_to_project(
-            request,
-            db
-    ):
+    def map_user_to_project(request, db):
 
     # Validate Project
         project = (
             db.query(Project)
-            .filter(
-                Project.id == request.project_id,
-                Project.is_active == True
-            )
+            .filter(Project.id == request.project_id, Project.is_active == True)
             .first()
         )
 
         if not project:
-            raise HTTPException(
-                status_code=404,
-                detail="Project not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
 
     # Validate User
         user = (
             db.query(User)
-            .filter(
-                User.id == request.user_id,
-                User.is_active == True
-            )
+            .filter(User.id == request.user_id, User.is_active == True)
             .first()
         )
 
         if not user:
-            raise HTTPException(
-                status_code=404,
-                detail="User not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
     # Check if user is already mapped to ANY project
         existing_user_mapping = (
             db.query(UserProject)
-            .filter(
-                UserProject.user_id == request.user_id
-            )
+            .filter(UserProject.user_id == request.user_id)
             .first()
         )
 
         if existing_user_mapping:
-            raise HTTPException(
-                status_code=400,
-                detail="The user has already mapped with another project"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="The user has already mapped with another project")
 
     # Check duplicate mapping
         existing_mapping = (
             db.query(UserProject)
-            .filter(
-                UserProject.user_id == request.user_id,
-                UserProject.project_id == request.project_id
-            )
+            .filter(UserProject.user_id == request.user_id, UserProject.project_id == request.project_id)
             .first()
         )
 
         if existing_mapping:
-            raise HTTPException(
-                status_code=400,
-                detail="User already mapped to project"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User already mapped to project")
 
-        mapping = UserProject(
-            user_id=request.user_id,
-            project_id=request.project_id
-        )
+        mapping = UserProject(user_id=request.user_id, project_id=request.project_id)
 
         db.add(mapping)
         db.commit()
@@ -96,9 +67,7 @@ class AdminService:
     @staticmethod
     def get_all_users_by_project(db):
 
-        projects = db.query(Project).filter(
-            Project.is_active == True
-        ).all()
+        projects = db.query(Project).filter(Project.is_active == True).all()
 
         response = {}
 
@@ -106,9 +75,7 @@ class AdminService:
 
             mappings = (
                 db.query(UserProject)
-                .filter(
-                    UserProject.project_id == project.id
-                )
+                .filter(UserProject.project_id == project.id)
                 .all()
             )
 
@@ -118,10 +85,7 @@ class AdminService:
 
                 user = (
                     db.query(User)
-                    .filter(
-                        User.id == mapping.user_id,
-                        User.is_active == True
-                    )
+                    .filter(User.id == mapping.user_id, User.is_active == True)
                     .first()
                 )
 
@@ -144,18 +108,12 @@ class AdminService:
     
             existing_project = (
                 db.query(Project)
-                .filter(
-                    Project.project_name == request.project_name,
-                    Project.is_active == True
-                )
+                .filter(Project.project_name == request.project_name, Project.is_active == True)
                 .first()
             )
     
             if existing_project:
-                raise HTTPException(
-                    status_code=400,
-                    detail="Project already exists"
-                )
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Project already exists")
     
             project = Project(
                 project_name=request.project_name,

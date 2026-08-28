@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 
 from app.models import User
 from app.models import Project
@@ -10,67 +10,39 @@ from app.logger_config import logger
 class TaskService:
 
     @staticmethod
-    def create_task(
-            request,
-            db
-    ):
+    def create_task(request, db):
 
         project = (
             db.query(Project)
-            .filter(
-                Project.id == request.project_id,
-                Project.is_active == True
-            )
+            .filter(Project.id == request.project_id, Project.is_active == True)
             .first()
         )
 
         if not project:
-            raise HTTPException(
-                status_code=404,
-                detail="Project not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
 
         user = (
             db.query(User)
-            .filter(
-                User.id == request.user_id,
-                User.is_active == True
-            )
+            .filter(User.id == request.user_id, User.is_active == True)
             .first()
         )
 
         if not user:
-            raise HTTPException(
-                status_code=404,
-                detail="User not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
         mapping = (
             db.query(UserProject)
-            .filter(
-                UserProject.user_id == request.user_id,
-                UserProject.project_id == request.project_id
-            )
+            .filter(UserProject.user_id == request.user_id, UserProject.project_id == request.project_id)
             .first()
         )
 
         if not mapping:
-            raise HTTPException(
-                status_code=400,
-                detail="User is not mapped to this project"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="User is not mapped to this project")
 
-        valid_priorities = [
-            "HIGH",
-            "MEDIUM",
-            "LOW"
-        ]
+        valid_priorities = ["HIGH", "MEDIUM", "LOW"]
 
         if request.priority.upper() not in valid_priorities:
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid priority"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid priority")
 
         task = Task(
             task_name=request.task_name,
@@ -98,10 +70,7 @@ class TaskService:
 
         tasks = (
             db.query(Task)
-            .filter(
-                Task.is_active == True,
-                Task.status != "VERIFIED_COMPLETED"
-            )
+            .filter(Task.is_active == True, Task.status != "VERIFIED_COMPLETED")
             .all()
         )
 
@@ -111,9 +80,7 @@ class TaskService:
  
             user = (
                 db.query(User)
-                .filter(
-                    User.id == task.user_id
-                )
+                .filter(User.id == task.user_id)
                 .first()
             )
 
@@ -130,18 +97,11 @@ class TaskService:
         return response
 
     @staticmethod
-    def get_user_tasks(
-            current_user,
-            db
-    ):
+    def get_user_tasks(current_user, db):
   
         tasks = (
             db.query(Task)
-            .filter(
-                Task.user_id == current_user.id,
-                Task.is_active == True,
-                Task.status != "VERIFIED_COMPLETED"
-            )
+            .filter(Task.user_id == current_user.id, Task.is_active == True, Task.status != "VERIFIED_COMPLETED")
             .all()
         )
 
@@ -162,61 +122,35 @@ class TaskService:
         return response
 
     @staticmethod
-    def update_task_status(
-            task_id,
-            request,
-            current_user,
-            db
-    ):
+    def update_task_status(task_id, request, current_user, db):
 
         task = (
             db.query(Task)
-            .filter(
-                Task.id == task_id,
-                Task.is_active == True
-            )
+            .filter(Task.id == task_id, Task.is_active == True)
             .first()
         )
 
         if not task:
-            raise HTTPException(
-                status_code=404,
-                detail="Task not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
         if task.user_id != current_user.id:
-            raise HTTPException(
-                status_code=403,
-                detail="You are not authorized to update this task"
-            )
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="You are not authorized to update this task")
 
-        valid_statuses = [
-            "IN_PROGRESS",
-            "COMPLETED_BY_USER"
-        ]
+        valid_statuses = ["IN_PROGRESS", "COMPLETED_BY_USER"]
 
         if request.status.upper() not in valid_statuses:
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid status"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid status")
 
         if (
                 task.status == "ASSIGNED"
                 and request.status.upper() == "COMPLETED_BY_USER"
         ):
-            raise HTTPException(
-                status_code=400,
-                detail="Task must be moved to IN_PROGRESS first"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Task must be moved to IN_PROGRESS first")
 
         if (
                 task.status == "COMPLETED_BY_USER"
         ):
-            raise HTTPException(
-                status_code=400,
-                detail="Task already submitted for review"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Task already submitted for review")
 
         task.status = request.status.upper()
 
@@ -236,10 +170,7 @@ class TaskService:
 
         tasks = (
             db.query(Task)
-            .filter(
-                Task.is_active == True,
-                Task.status == "COMPLETED_BY_USER"
-            )
+            .filter(Task.is_active == True, Task.status == "COMPLETED_BY_USER")
             .all()
         )
 
@@ -247,11 +178,7 @@ class TaskService:
 
         for task in tasks:
   
-            user = (
-                db.query(User)
-                .filter(User.id == task.user_id)
-                .first()
-            )
+            user = (db.query(User).filter(User.id == task.user_id).first())
 
             project = (
                 db.query(Project)
@@ -273,31 +200,19 @@ class TaskService:
         return response
 
     @staticmethod
-    def verify_task(
-            task_id,
-            db
-    ):
+    def verify_task(task_id, db):
 
         task = (
             db.query(Task)
-            .filter(
-                Task.id == task_id,
-                Task.is_active == True
-            )
+            .filter(Task.id == task_id, Task.is_active == True)
             .first()
         )
 
         if not task:
-            raise HTTPException(
-                status_code=404,
-                detail="Task not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
         if task.status != "COMPLETED_BY_USER":
-            raise HTTPException(
-                status_code=400,
-                detail="Only completed tasks can be verified"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only completed tasks can be verified")
 
         task.status = "VERIFIED_COMPLETED"
 
@@ -317,18 +232,12 @@ class TaskService:
 
         task = (
             db.query(Task)
-            .filter(
-                Task.id == task_id,
-                Task.is_active == True
-            )
+            .filter(Task.id == task_id, Task.is_active == True)
             .first()
         )
 
         if not task:
-            raise HTTPException(
-                status_code=404,
-                detail="Task not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Task not found")
 
         task.is_active = False
         db.commit()

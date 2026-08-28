@@ -12,56 +12,28 @@ from app.schemas import LoginRequest
 
 from app.services.auth_service import AuthService
 
-
-router = APIRouter(
-    prefix="/auth",
-    tags=["Authentication"]
-)
-
+router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 @router.post("/register")
-def register(
-        request: RegisterRequest,
-        db: Session = Depends(get_db)
-):
+def register(request: RegisterRequest, db: Session = Depends(get_db)):
 
     try:
-
-        user = AuthService.register(
-            request,
-            db
-        )
+        user = AuthService.register(request, db)
 
         return {
-            "message":
-            "User registered successfully",
-            "user_id":
-            user.id
+            "message": "User registered successfully",
+            "user_id": user.id
         }
 
     except Exception as e:
-
         logger.error(f"Error while creating admin user: {str(e)}")
-
-        raise HTTPException(
-            status_code=400,
-            detail=str(e)
-        )
-
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
 @router.post("/login")
-def login(
-        request: LoginRequest,
-        db: Session = Depends(get_db)
-):
+def login(request: LoginRequest, db: Session = Depends(get_db)):
 
-    response = AuthService.login(
-        request,
-        db
-    )
-
+    response = AuthService.login(request, db)
     if not response:
-
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 
     return response

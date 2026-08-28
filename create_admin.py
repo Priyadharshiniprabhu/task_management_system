@@ -23,11 +23,7 @@ def create_admin():
 
         password = getpass("Enter Admin Password: ")
 
-        existing_user = (
-            db.query(User)
-            .filter(User.email == email)
-            .first()
-        )
+        existing_user = (db.query(User).filter(User.email == email).first())
 
         if existing_user:
             print("\nAdmin/User already exists with this email.")

@@ -9,62 +9,29 @@ from app.schemas import CreateTaskRequest
 from app.services.task_service import TaskService
 from app.auth import get_current_user
 
-router = APIRouter(
-    prefix="/admin/tasks",
-    tags=["Task Management"]
-)
-
+router = APIRouter(prefix="/admin/tasks", tags=["Task Management"])
 
 @router.post("")
-def create_task(
-        request: CreateTaskRequest,
-        db: Session = Depends(get_db),
-        current_user=Depends(admin_required)
-):
+def create_task(request: CreateTaskRequest, db: Session = Depends(get_db), current_user=Depends(admin_required)):
 
-    return TaskService.create_task(
-        request,
-        db
-    )
+    return TaskService.create_task(request, db)
 
 @router.get("")
-def get_all_tasks(
-        db: Session = Depends(get_db),
-        current_user=Depends(admin_required)
-):
+def get_all_tasks(db: Session = Depends(get_db), current_user=Depends(admin_required)):
 
-    return TaskService.get_all_tasks(
-        db
-    )
+    return TaskService.get_all_tasks(db)
 
 @router.get("/review")
-def get_tasks_for_review(
-        db: Session = Depends(get_db),
-        current_user=Depends(admin_required)
-):
+def get_tasks_for_review(db: Session = Depends(get_db), current_user=Depends(admin_required)):
 
     return TaskService.get_tasks_for_review(db)
 
 @router.patch("/{task_id}/verify")
-def verify_task(
-        task_id: int,
-        db: Session = Depends(get_db),
-        current_user=Depends(admin_required)
-):
+def verify_task(task_id: int, db: Session = Depends(get_db), current_user=Depends(admin_required)):
 
-    return TaskService.verify_task(
-        task_id,
-        db
-    )
+    return TaskService.verify_task(task_id, db)
 
 @router.delete("/{task_id}")
-def delete_task(
-        task_id: int,
-        db: Session = Depends(get_db),
-        current_user=Depends(admin_required)
-):
+def delete_task(task_id: int, db: Session = Depends(get_db), current_user=Depends(admin_required)):
 
-    return TaskService.delete_task(
-        task_id,
-        db
-    )
+    return TaskService.delete_task(task_id, db)

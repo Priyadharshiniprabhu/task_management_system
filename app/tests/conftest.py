@@ -14,7 +14,6 @@ from app.models import Project, Task, User
 
 client = TestClient(app)
 
-
 @pytest.fixture(scope="session", autouse=True)
 def seed_test_database():
     Base.metadata.create_all(bind=engine)

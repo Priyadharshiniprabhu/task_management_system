@@ -10,26 +10,17 @@ from app.logger_config import logger
 class AuthService:
 
     @staticmethod
-    def register(
-            register_request,
-            db: Session
-    ):
+    def register(register_request, db: Session):
 
-        existing_user = db.query(User).filter(
-            User.email == register_request.email
-        ).first()
+        existing_user = db.query(User).filter(User.email == register_request.email).first()
 
         if existing_user:
-            raise Exception(
-                "Email already registered"
-            )
+            raise Exception("Email already registered")
 
         user = User(
             username=register_request.username,
             email=register_request.email,
-            password=hash_password(
-                register_request.password
-            ),
+            password=hash_password(register_request.password),
             role="USER"
         )
 
@@ -42,22 +33,14 @@ class AuthService:
         return user
 
     @staticmethod
-    def login(
-            login_request,
-            db: Session
-    ):
+    def login(login_request, db: Session):
 
-        user = db.query(User).filter(
-            User.email == login_request.email
-        ).first()
+        user = db.query(User).filter(User.email == login_request.email).first()
 
         if not user:
             return None
 
-        password_valid = verify_password(
-            login_request.password,
-            user.password
-        )
+        password_valid = verify_password(login_request.password, user.password)
 
         if not password_valid:
             return None

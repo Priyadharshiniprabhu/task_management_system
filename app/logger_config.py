@@ -3,7 +3,7 @@ import os
 
 from logging.handlers import RotatingFileHandler
 
-LOG_DIR = "logs"
+LOG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "logs"))
 
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
@@ -24,4 +24,5 @@ formatter = logging.Formatter(
 
 file_handler.setFormatter(formatter)
 
-logger.addHandler(file_handler)
+if not logger.handlers:
+    logger.addHandler(file_handler)
